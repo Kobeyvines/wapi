@@ -82,3 +82,15 @@ class Booking(models.Model):
     
 def __str__(self):
         return f"{self.user.username} - {self.ticket_tier.event.name}"
+    
+class Ticket(models.Model):
+    booking = models.ForeignKey(Booking, on_delete=models.CASCADE, related_name='tickets')
+    ticket_number = models.CharField(max_length=20, unique=True)
+    qr_code = models.ImageField(upload_to='tickets/qrcodes/', blank=True)
+    pdf_ticket = models.FileField(upload_to='tickets/pdfs/', blank=True)
+    is_scanned = models.BooleanField(default=False)
+    scanned_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.ticket_number} - {self.booking.user.username}"

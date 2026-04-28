@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Event, Category, TicketTier, Booking
+from .models import Event, Category, TicketTier, Booking, Ticket
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,6 +17,7 @@ class EventSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
     tiers = TicketTierSerializer(many=True, read_only=True)
     organizer_name = serializers.CharField(source='organizer.username', read_only=True)
+    poster = serializers.ImageField(required=False, allow_null=True)
 
     class Meta:
         model = Event
@@ -34,3 +35,8 @@ class BookingSerializer(serializers.ModelSerializer):
         model = Booking
         fields = ['id', 'ticket_tier', 'quantity', 'total_price', 'status', 'event_name', 'tier_name']
         read_only_fields = ['total_price', 'status']
+        
+class TicketSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ticket
+        fields = ['id', 'ticket_number', 'qr_code', 'pdf_ticket', 'is_scanned', 'created_at']

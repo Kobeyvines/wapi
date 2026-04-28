@@ -8,6 +8,22 @@ services:
 
   redis:
     image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  celery:
+      build: .
+      command: celery -A wapi worker --loglevel=info
+      volumes:
+        - .:/app
+      environment:
+        - DJANGO_SETTINGS_MODULE=wapi.settings
+        - CELERY_BROKER_URL=redis://redis:6379/0
+        - DATABASE_URL=postgres://admin:password@db:5432/wapi_db
+      depends_on:
+        - db
+        - redis
+        - web 
 
   web:
     build: .

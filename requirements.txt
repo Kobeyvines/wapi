@@ -7,3 +7,7 @@ djangorestframework
 pillow
 drf-spectacular
 requests
+celery
+redis
+qrcode
+reportlab
