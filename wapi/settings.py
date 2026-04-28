@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-2^5ck$zj-)yq^$=&-&+o(nebegy8&ds@y^*53bih$-sjru8@3(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'plaza-clothing-brook.ngrok-free.dev']
 
 
 # Application definition
@@ -46,10 +46,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'drf_spectacular',
     'accounts',
     'events',
     'community',
 ]
+
+REST_FRAMEWORK = {
+    # Tell DRF to use drf-spectacular for schema generation
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Wapi Events API',
+    'DESCRIPTION': 'Ticketing and Community Ecosystem for Wapi Events',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # Optional: Add branding or UI preferences here
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
